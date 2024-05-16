@@ -1,52 +1,58 @@
-
-
-public class Character {
+public abstract class Character{
     protected String name;
+    protected int HP;
+    protected int MP;
     protected int level;
-    protected int maxHP;
-    protected int maxMP;
-    protected int currentHP;
-    protected int currentMP;
+    protected int armor;
+    protected boolean weakStatus;
+    protected boolean poisonStatus;
+    protected boolean sleepStatus;
+    protected Weapon weapon;
 
-    // Constructor
-    public Character(String name, int level) {
-        this.name = name;
+    public Character(String name, int level){
+        this.name=name;
         this.level = level;
-        this.maxHP = level * 100; // Misalkan tiap level HP bertambah 100
-        this.maxMP = level * 50;  // Misalkan tiap level MP bertambah 50
-        this.currentHP = this.maxHP;
-        this.currentMP = this.maxMP;
+        this.HP = level * 100;
+        this.MP = level * 50;
     }
 
-    // Method untuk menyerang
-    public void attack(Character opponent, int AP) {
-        opponent.currentHP -= AP;
-        System.out.println(this.name + " menyerang " + opponent.name + " dengan " + AP + " AP!");
-    }
+    public abstract void attack(Character opponent);
 
-    // Method untuk menggunakan potion
-    public void usePotion(int amount) {
-        this.currentHP += amount;
-        if (this.currentHP > this.maxHP) {
-            this.currentHP = this.maxHP;
+    public abstract void skill(Character opponent);
+
+    public boolean checkMP(){
+        if(this.MP<20){
+            return false;
+        }else{
+            return true;
         }
-        System.out.println(this.name + " menggunakan potion dan menambah " + amount + " HP.");
     }
 
-    // Method untuk menggunakan ether
-    public void useEther(int amount) {
-        this.currentMP += amount;
-        if (this.currentMP > this.maxMP) {
-            this.currentMP = this.maxMP;
-        }
-        System.out.println(this.name + " menggunakan ether dan menambah " + amount + " MP.");
+    public void useArmor(int armor, Weapon weapon){
+        int weaponAP = weapon.getAP();
+        weaponAP -= armor;
+        System.out.println(this.name + " menggunakan Armor, AP senjata menjadi " + weaponAP);
     }
 
-    // Method untuk menampilkan status karakter
-    public void displayStatus() {
-        System.out.println("Name: " + this.name);
+    public void itemRemedy(){
+        weakStatus = false;
+        poisonStatus = false;
+        sleepStatus = false;
+        System.out.println(this.name + " weak status: " + weakStatus);
+        System.out.println(this.name + " poison status: " + poisonStatus);
+        System.out.println(this.name + " sleep status: " + sleepStatus);
+    }
+
+    public void itemAntidote(){
+        poisonStatus = false;
+        System.out.println(this.name + " poison status: " + poisonStatus);
+    }
+
+    public void display(){
+        System.out.println("Nama: " + this.name);
         System.out.println("Level: " + this.level);
-        System.out.println("HP: " + this.currentHP + "/" + this.maxHP);
-        System.out.println("MP: " + this.currentMP + "/" + this.maxMP);
+        System.out.println("HP: " + this.HP);
+        System.out.println("MP: " + this.MP + "\n");
     }
+
 }

@@ -1,20 +1,22 @@
-
-
-public class Foe extends Character {
-    private Race race;
-    private Weapon weapon;
-
-    // Constructor
-    public Foe(String name, int level, Race race, Weapon weapon) {
+public class Foe extends Character{
+    
+    public Foe(String name, int level){
         super(name, level);
-        this.race = race;
-        this.weapon = weapon;
     }
 
-    // Method untuk menyerang dengan senjata
-    public void attackWithWeapon(Character opponent) {
-        int AP = this.weapon.getAP();
-        opponent.currentHP -= AP;
-        System.out.println(this.name + " menyerang " + opponent.name + " dengan " + this.weapon.getName() + " dan " + AP + " AP!");
+    public void attack(Character opponent){
+        System.out.println(this.name + " menusuk " + opponent.name);
+        opponent.HP -= 20;
     }
+
+    public void skill(Character opponent){
+        if(checkMP() == false){
+            System.out.println("Tidak dapat menggunakan Skill karena MP kurang");
+        }else{
+        System.out.println(this.name + " menggunakan skill.");
+        this.MP -= 10;
+        opponent.HP -= 20;
+        }
+    }
+
 }
